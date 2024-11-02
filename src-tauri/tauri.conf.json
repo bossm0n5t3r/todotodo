@@ -36,6 +36,18 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDlEQzRCQ0QwRkQ2RTVGMzcKUldRM1gyNzkwTHpFbmY4dWFMajFILzVIQXJ4Mk0rUHVvd0lRTUhJam9OYm1sOTF5dnlPWjdOeWEK",
+      "endpoints": [
+        "https://github.com/bossm0n5t3r/todotodo/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
   }
 }
