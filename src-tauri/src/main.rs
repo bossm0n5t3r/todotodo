@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod command;
+mod file;
 mod fns;
 mod tray;
 
@@ -11,7 +12,10 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             command::init,
-            command::show_menubar_panel
+            command::show_menubar_panel,
+            file::save_todo,
+            file::load_todo_list,
+            file::delete_todo,
         ])
         .plugin(tauri_nspanel::init())
         .setup(|app| {
