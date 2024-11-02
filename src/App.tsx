@@ -19,9 +19,38 @@ type Task = {
   completed: boolean;
 };
 
+const saveTodo = async (task: Task): Promise<string> => {
+  try {
+    const result = await invoke('save_todo', { todoData: task });
+    return result as string;
+  } catch (error) {
+    console.error('저장 중 오류 발생:', error);
+    return '저장 중 오류가 발생했습니다.';
+  }
+};
+
+const loadTodoList = async (): Promise<Task[]> => {
+  try {
+    const result = await invoke('load_todo_list');
+    return result as Task[];
+  } catch (error) {
+    console.error('불러오기 중 오류 발생:', error);
+    return [];
+  }
+};
+
+const deleteTodo = async (task: Task): Promise<void> => {
+  try {
+    await invoke('delete_todo', { todoData: task });
+  } catch (error) {
+    console.error('삭제 중 오류 발생:', error);
+  }
+};
+
 export default function App() {
   useEffect(() => {
     invoke('init');
+    loadTodoList().then((result) => setTasks(result));
   }, []);
 
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -40,6 +69,7 @@ export default function App() {
         completed: false,
       };
       setTasks([...tasks, newTask]);
+      saveTodo(newTask);
       setNewTaskTitle('');
     }
   };
@@ -50,10 +80,21 @@ export default function App() {
         task.id === id ? { ...task, completed: !task.completed } : task,
       ),
     );
+    const targetTask = tasks.find((task) => task.id === id);
+    if (targetTask) {
+      saveTodo({
+        ...targetTask,
+        completed: !targetTask.completed,
+      });
+    }
   };
 
   const deleteTask = (id: number) => {
     setTasks(tasks.filter((task) => task.id !== id));
+    const targetTask = tasks.find((task) => task.id === id);
+    if (targetTask) {
+      deleteTodo(targetTask);
+    }
   };
 
   return (
