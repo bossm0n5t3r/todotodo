@@ -9,6 +9,12 @@ pnpm install
 pnpm tauri dev
 ```
 
+## TO-DO
+
+- [ ] Add "Quit" button
+- [ ] macOS Code Signing
+  - [ ] Notarization
+
 ## Tauri + React + Typescript
 
 This template should help get you started developing with Tauri, React and Typescript in Vite.
